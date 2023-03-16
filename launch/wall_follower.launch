@@ -1,0 +1,4 @@
+<launch>
+    <node name="scan_values_handler" pkg="object_sorter" type="scan_values_handler.py" output="screen"/>
+
+</launch>
