@@ -1,0 +1,4 @@
+<launch>
+    <node name="hello_robot" pkg="object_sorter" type="hello_robot.py" output="screen"/>
+
+</launch>
