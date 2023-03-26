@@ -1,0 +1,11 @@
+This tells us what we are working on. 
+TODO =========================
+<stuff>
+
+
+EXISTING PROGRESS ===================
+Week#1 J ====
+Currently, I've added a bunch of extra useful code to the repo. 
+However, I'm really only working on main.py. 
+
+The launch file will launch main.py, key_publisher.py for manual control, and rqt_image_view

@@ -1,12 +1,15 @@
 # COSI119-final-objectSorter
-
 objectSorter
 
 By Isaac Goldings, David Pollack, and Jeremy Huey
+Contact at isaacgoldings@brandeis.edu, davidpollack@brandeis.edu, jhuey@brandeis.edu
 
-contact at isaacgoldings@brandeis.edu, davidpollack@brandeis.edu, jhuey@brandeis.edu
+To run ====
+(check env requirements below)
+$ roslaunch COSI119-final-objectSorter sorterv1.launch
 
-Our project is a robot that can sort objects by color. It will demonstrate this by picking the obejcts up with a claw and moving them into designated 
+About ====
+Our project is a robot that can sort objects by color. It will demonstrate this by picking the objects up with a claw and moving them into designated 
 areas of an arena based on their color.
 
 We are hoping to learn about computer vision, pathing/navigation, and hardware integration through this project. 

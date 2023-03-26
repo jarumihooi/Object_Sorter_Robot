@@ -13,6 +13,8 @@ from visualization_msgs.msg import Marker
 LINEAR_SPEED = 0.2
 ANGULAR_SPEED = 3.1415/4
 
+
+
 # fill in scan callback
 def scan_cb(msg):
    global state
