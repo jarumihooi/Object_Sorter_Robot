@@ -11,6 +11,6 @@
   <!-- run the main file --> <!-- this version 1 is the best -->
   <node pkg='COSI119-final-objectSorter' type='sorterv1.py' name="main" output='screen' />
   <!-- extra files -->
-  <node pkg="COSI119-final-objectSorter" type="key_publisher.py" name="key" output="screen" output='screen' launch-prefix="xterm -e"/> 
+  <node pkg="COSI119-final-objectSorter" type="key_publisher.py" name="key" output="screen" launch-prefix="xterm -e"/> 
   
 </launch>
