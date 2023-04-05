@@ -33,13 +33,10 @@ class Sorter():
         # self.odom_sub = rospy.Subscriber('odom', Odometry, self.odom_cb) #this gets odom info to improve perception, used for location. 
         self.scan_sub = rospy.Subscriber('scan', LaserScan, self.scan_cb) 
 
-        
-        
         # State params: 
         self.state = "h"
-        self.PROX_DIST = 0.3 #0.8 for sim
-
         # motion params: 
+        self.PROX_DIST = 0.3 #0.8 for sim
         self.LINEAR_SPEED = 0.4
         self.ANGULAR_SPEED = math.pi/4
 
@@ -66,61 +63,16 @@ class Sorter():
     #     self.location[1] = msg.pose.pose.position.y
 
     def scan_cb(self, msg):
-        # clean data section ====
-
-
-        # end clean data ====
-      
+        clean_ranges = list(np.where(np.array(msg.ranges)<0.03, 4, np.array(msg.ranges)))
+        print(clean_ranges)
+        if (self.state not in ["c","h", "d"]):#and manual_col_override == False):
+            # clean data, move it here. 
         
-        if (self.state not in ["c", "h", "d"]):#and manual_col_override == False):
-            #clean = lambda x: x if x < 0.03 else 4
-            #clean_ranges = [i for i in msg.ranges]
-            clean_ranges = list(np.where(np.array(msg.ranges)<0.03, 4, np.array(msg.ranges)))
-            print(clean_ranges)
-            #prev_key_press = state
-            # avg_arr = {} #ang: dist
-            # avg_arr = dict((i,j) for i,j in enumerate(clean_ranges))
-            # print("avg_arr", len(avg_arr))
-            # for ang in range(len(msg.ranges)): #(-45,46)
-            #     if msg.ranges[ang] < self.PROX_DIST:
-            #         sum = 0
-            #         for five_deg in range(-2,3):
-            #             sum += msg.ranges[(ang+five_deg)%360] # next time try median.
-            #         # end for
-            #         avg_arr[ang] = sum / 5 #also can try using 7
-            # end for 
-            # check 
-            # for ang, dist in avg_arr.items(): #bf added .items()
-            #     if dist < self.PROX_DIST : 
-            #         if ang >= 338:
-            #             self.wall_sensed["F"] = True
-            #         elif ang >= 293:
-            #             self.wall_sensed["FR"] = True
-            #         elif ang >= 248:
-            #             self.wall_sensed["R"] = True
-            #         elif ang >= 203:
-            #             self.wall_sensed["BR"] = True
-            #         elif ang >= 158:
-            #             self.wall_sensed["B"] = True
-            #         elif ang >= 113:
-            #             self.wall_sensed["BL"] = True
-            #         elif ang >= 68:
-            #             self.wall_sensed["L"] = True
-            #         elif ang >= 23:
-            #             self.wall_sensed["FL"] = True
-            #         else: #ang >= 0
-            #             self.wall_sensed["F"] = True
-            #         scan_time = rospy.Time.now().to_sec()
-                    # print(self.wall_sensed)
-            # end for
             self.cur_dist = min(msg.ranges[248:293])
             print("cur_dist", self.cur_dist)
-            #reutrn False #no avg val was under 0.3m. 
         #end if
     #end m()
 
-
-    # ========================
     # ==== running code ======
     '''This method prints the state of the system'''
     def print_state(self):
@@ -129,15 +81,6 @@ class Sorter():
             speed = self.t_pub.linear.x
         else: 
             speed = 0.0
-        # print("location:", self.location, "speed:", speed)
-        # print("angle:", self.t_pub.angular.z)
-        # print(self.wall_sensed)
-        # if (self.state == "s"):
-        #     print("Spiral angle:",self.spiral_turn)
-
-        # calculate time since last key stroke
-        #time_since = rospy.Time.now() - self.last_key_press_time
-        #print("SECS SINCE LAST KEY PRESS: " + str(time_since.secs))
 
     '''This method runs the program'''
     def run(self):
