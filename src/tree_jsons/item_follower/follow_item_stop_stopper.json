@@ -1,0 +1,12 @@
+{
+    "name":"follow_item_stop_stopper",
+    "type":"Selector",
+    "children":[
+      {
+        "ref":"item_follower/stop_item.json"
+      },
+      {
+        "ref":"item_follower/follow_item.json"
+      }
+    ]
+  }

@@ -1,5 +1,10 @@
 <launch>
+    <!-- This launch file: V1! 
+         the correct file to launch. -->
+    <!-- See readme if doesn't run. -->
+    <!-- roslaunch mr_bt mt_bt.launch tree:=move_to_position -->
 
+    <!-- tree settings -->
     <arg name="tree" default="__NONE__" /> 
     <param name="tree" value="$(arg tree)"/>
 
@@ -11,7 +16,19 @@
 
 
     <node name="tick" pkg="mr_bt" type="tick.py" output="screen" />
+    <!-- <node name="behavior_tree" pkg="COSI119-final-objectSorter" type="statev2.py" output="screen" cwd="node" /> -->
     <node name="behavior_tree" pkg="mr_bt" type="main.py" output="screen" cwd="node" />
+    <!-- we can't run our own -->
     <node name="graph" pkg="mr_bt" type="grapher.py" output="screen" cwd="node" />
+    
+    <!-- run rqt-image-view -->
+    <!-- <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen"> -->
+      <!-- <remap from="image" to="/fiducial_images" /> -->
+    <!-- </node> -->
 
+    <!-- run the main file --> <!-- this version 1 is the best -->
+    <!-- <node pkg='COSI119-final-objectSorter' type='sorterv1.py' name="main" output='screen' /> -->
+    <!-- extra files -->
+    <!-- <node pkg="COSI119-final-objectSorter" type="key_publisher.py" name="key" output="screen" launch-prefix="xterm -e"/>  -->
+  
 </launch>

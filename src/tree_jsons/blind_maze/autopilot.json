@@ -1,0 +1,15 @@
+{
+    "name":"Autopilot",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"blind_maze/avoid_wall.json"
+        },
+        {
+            "name":"Use the controller to control the robot",
+            "type":"GamepadTeleop",
+            "lin_scale":2,
+            "ang_scale":2
+        }
+    ]
+}

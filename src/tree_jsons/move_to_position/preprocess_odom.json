@@ -1,0 +1,23 @@
+{
+    "name":"preprocess_odom",
+    "type":"Multitasker",
+    "children":[
+        {
+            "name":"get_pos",
+            "type":"GetPosition",
+            "position_var_name":"position"
+        },
+        {
+            "name":"get_rot",
+            "type":"GetRotation",
+            "odom_var_name":"/odom",
+            "rotation_var_name":"rotation",
+            "degrees":false
+        }
+    ],
+    "blackboard":{
+        "position":null,
+        "rotation":null
+    },
+    "blackbox":true
+}

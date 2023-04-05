@@ -1,0 +1,17 @@
+{
+    "name":"** //STRING// name of node **",
+    "type":"AngularPID",
+    "pid_err_var_name":"** //STRING// the name in the blackboard of the angular velocity calculated by the PID algorithm **",
+    "nearest_dist_var_name":"** //STRING// the name in the blackboard of the nearest distance from the robot **",
+    "nearest_angle_var_name":"** //STRING// the name in the blackboard of the angle to the nearest distance from the robot **",
+    "kp":"** //FLOAT/INT// kp PID value **",
+    "kd":"** //FLOAT/INT// kd PID value **",
+    "kp2":"** //FLOAT/INT// kp2 PID value **",
+    "dwall":"** //FLOAT/INT// the distance desired to be from the wall in meters **",
+    "offset":"** //FLOAT/INT// the angular offset to be from the wall in radians **",
+    "blackboard":{
+        "** //STRING// the name in the blackboard of the angular velocity calculated by the PID algorithm **":"** //FLOAT/INT/NULL// angular velocity **",
+        "** //STRING// the name in the blackboard of the nearest distance from the robot **":"** //FLOAT/INT// distace value in meters **",
+        "** //STRING// the name in the blackboard of the angle to the nearest distance from the robot *":"** //FLOAT/INT// angle value in radians **"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name":"** //STRING// name of node **",
+    "type":"LinearPID",
+    "linear_pid_var_name":"** //STRING// the name in the blackboard of the linear velocity calculated by the PID algorithm **",
+    "diff_var_name":"** //STRING// the name in the blackboard of the meter difference between the target and the current location **",
+    "max_vel":"** //FLOAT/INT// the desired maximum linear velocity **",
+    "offset":"** //FLOAT/INT// the desired distance to stop from away from the target **",
+    "blackboard":{
+        "** //STRING// the name in the blackboard of the linear velocity calculated by the PID algorithm **":"** //FLOAT/NULL// linear velocity **",
+        "** //STRING// the name in the blackboard of the meter difference between the target and the current location **":"** //FLOAT/INT// distance in meters **"
+    }
+}

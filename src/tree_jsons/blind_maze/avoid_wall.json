@@ -1,0 +1,16 @@
+{
+    "name":"avoid running into a wall",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"blind_maze/wall_to_right.json"
+        },
+        {
+            "ref":"blind_maze/wall_to_left.json"
+        }
+    ],
+    "blackbox": true,
+    "blackboard":{
+        "/scan":"LaserScan"
+    }
+}

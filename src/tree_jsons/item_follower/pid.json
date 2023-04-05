@@ -1,0 +1,24 @@
+{
+    "name":"pid",
+    "type":"Multitasker",
+    "children":[
+      {
+        "name":"Calculate angular velocity necessary to face towards the position",
+        "type":"PathCorrection",
+        "correction_var_name":"angular_pid",
+        "goal_value_var_name":"nearest_wall_angle",
+        "current_value_var_name":"rotation",
+        "max_vel":1.5,
+        "offset":1.554
+      },
+      {
+        "name":"Calculate linear velocity to get to position",
+        "type":"PathCorrection",
+        "correction_var_name":"linear_pid",
+        "goal_value_var_name":"nearest_dist",
+        "current_value_var_name":"dummy_current_value",
+        "max_vel":0.1,
+        "offset":0.3
+      }
+    ]
+}

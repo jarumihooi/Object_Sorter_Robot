@@ -1,0 +1,8 @@
+{   
+    "name":"** //STRING// name of node **",
+    "type":"FlipBoolVar",
+    "var_name":"** //STRING// the variable name in the blackboard of the boolean to flip **",
+    "blackboard":{
+        "** //STRING// the variable name in the blackboard of the boolean to flip **":"** //BOOLEAN/NULL// boolean value **"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name":"item_follower",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"item_follower/follow_and_avoid.json"
+        },
+        {
+            "ref":"item_follower/follow_wall.json"
+        }
+    ]
+}

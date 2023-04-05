@@ -1,0 +1,18 @@
+{
+    "name":"turn away from wall",
+    "type":"Sequencer",
+    "children":[
+        {
+            "name":"wall ahead!",
+            "type":"WallAhead",
+            "dist":0.4,
+            "fov":45
+        },
+        {
+            "name": "rotate away from wall",
+            "type":"LinearAngularStatic",
+            "lin_vel":0.0,
+            "ang_vel":0.5
+        }
+    ]
+}

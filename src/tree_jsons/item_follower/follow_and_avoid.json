@@ -1,0 +1,27 @@
+{
+  "name":"follow_and_avoid",
+  "type":"Sequencer",
+  "children":[
+    {
+      "name":"Is there an obstacle ahead?",
+      "type":"ClearAhead",
+      "stopping_dist":0.07,
+      "stopping_fov":30
+    },
+    {
+      "name":"Run box detector model",
+      "type":"FastDetector",
+      "label_dict_var_name":"detector_label_dict",
+      "camera_var_name":"/raspicam_node/image/compressed",
+      "detection_var_name":"detection"
+    },
+    {
+      "ref":"item_follower/follow_item_stop_stopper.json"
+    }
+  ],
+  "blackboard":{
+    "detector_label_dict":null,
+    "/raspicam_node/image/compressed":"CompressedImage",
+    "detection":null
+  }
+}

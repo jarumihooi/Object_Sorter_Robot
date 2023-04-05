@@ -1,0 +1,12 @@
+{
+    "name":"** //STRING// name of node **",
+    "type":"FastDetector",
+    "label_dict_name":"** //STRING// the name in the blackboard of the label dictionary of the model **",
+    "camera_var_name":"** //STRING// the name in the blackboard of the camera message **",
+    "detection_var_name":"** //STRING// the name in the blackboard of the model detection output **",
+    "blackboard":{
+        "** //STRING// the name in the blackboard of the label dictionary of the model **":"** //DICTIONARY/NULL// label dictionary of the model **",
+        "** //STRING// the name in the blackboard of the camera message **":"** //COMPRESSEDIMAGE// camera message image **",
+        "** //STRING// the name in the blackboard of the model detection output **":"** //DICT/NULL// output of model **"
+    }
+}

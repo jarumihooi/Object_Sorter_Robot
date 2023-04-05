@@ -1,0 +1,25 @@
+{
+    "name":"follow_item",
+    "type":"Sequencer",
+    "children":[
+      {
+        "name":"Calculate bearing to item",
+        "type":"ItemBearingErr",
+        "item_err_var_name":"item_err",
+        "label_dict_var_name":"detector_label_dict",
+        "item_id":"person",
+        "detection_var_name":"detection",
+        "camera_resolution":[410,308]
+      },
+      {
+        "name":"Move forward in direction of bearing",
+        "type":"LinearAngularDynamic",
+        "linear_var_name":"static_lin",
+        "angular_var_name":"item_err"
+      }
+    ],
+    "blackboard":{
+      "item_err":null,
+      "static_lin":0.1
+    }
+  }

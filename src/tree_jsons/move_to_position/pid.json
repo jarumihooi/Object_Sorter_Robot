@@ -1,0 +1,31 @@
+{
+    "name":"goal_pid",
+    "type":"Multitasker",
+    "children":[
+        
+        {
+            "name":"Calculate angular velocity necessary to face towards the position",
+            "type":"PathCorrection",
+            "correction_var_name":"angular_goal_pid",
+            "goal_value_var_name":"goal_rotation",
+            "current_value_var_name":"rotation",
+            "max_vel":1.5
+          },
+          {
+            "name":"Calculate linear velocity to get to position",
+            "type":"PathCorrection",
+            "correction_var_name":"linear_goal_pid",
+            "goal_value_var_name":"dist",
+            "current_value_var_name":"dummy_current_value",
+            "max_vel":0.1,
+            "offset":0
+          }
+    ],
+    "blackboard":{
+        "angular_goal_pid":null,
+        "linear_goal_pid":null,
+        "dummy_current_value":0,
+        "dist":null
+    },
+    "blackbox":true
+}

@@ -1,0 +1,19 @@
+{
+    "name":"wall right?",
+    "type":"Sequencer",
+    "children":[
+        {
+            "name":"Is there a wall to the right?",
+            "type":"WallAtAngleRange",
+            "dist":0.3,
+            "start_angle":340,
+            "end_angle":359
+        },
+        {
+            "name":"turn left",
+            "type":"LinearAngularStatic",
+            "lin_vel":0.0,
+            "ang_vel":2
+        }
+    ]
+}

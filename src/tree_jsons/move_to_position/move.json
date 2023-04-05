@@ -1,0 +1,23 @@
+{
+    "name":"move",
+    "type":"Sequencer",
+    "children":[
+        {
+            "ref":"move_to_position/preprocess_odom.json"
+        },
+        {
+            "ref":"move_to_position/dist_ang_to_pos.json"
+        },
+        {
+            "ref":"move_to_position/pid.json"
+        },
+        {
+            "name":"move_with_pid",
+            "type":"LinearAngularDynamic",
+            "linear_var_name":"linear_goal_pid",
+            "angular_var_name":"angular_goal_pid"
+        }
+    ]
+}
+
+

@@ -1,0 +1,22 @@
+{
+    "name":"stop_item",
+    "type":"Sequencer",
+    "children":[
+      {
+        "name":"Is stopper visible?",
+        "type":"ItemBearingErr",
+        "item_err_var_name":"_",
+        "label_dict_var_name":"detector_label_dict",
+        "item_id":"bottle",
+        "detection_var_name":"detection",
+        "cam_res":[410,308]
+      },
+      {
+        "name":"Stop!",
+        "type":"Stop"
+      }
+    ],
+    "blackboard":{
+      "_":null
+    }
+  }

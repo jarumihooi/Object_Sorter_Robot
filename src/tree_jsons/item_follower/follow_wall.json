@@ -1,0 +1,22 @@
+{
+    "name":"follow_wall",
+    "type":"Sequencer",
+    "children":[
+      {
+        "ref":"item_follower/scan_preprocessing.json"
+      },
+      {
+        "ref":"item_follower/pid.json"
+      },
+      {
+        "name":"Move according to PID calculations",
+        "type":"LinearAngularDynamic",
+        "linear_var_name":"linear_pid",
+        "angular_var_name":"angular_pid"
+      }
+    ],
+    "blackboard":{
+      "linear_pid":null,
+      "angular_pid":null
+    }
+  }

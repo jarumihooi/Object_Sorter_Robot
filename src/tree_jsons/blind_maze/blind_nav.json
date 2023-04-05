@@ -1,0 +1,19 @@
+{
+    "name":"blindly navigate through maze",
+    "type":"Sequencer",
+    "children":[
+        {
+            "name":"Check to see if we are still in the maze",
+            "type":"ReachedPosition",
+            "goal_pos_var_name":"goal_pos",
+            "error":4,
+            "blackboard":{
+                "goal_pos":[0,0],
+                "/odom":"Odometry"
+            } 
+        },
+        {
+            "ref":"blind_maze/push_through_maze.json"
+        }
+    ]
+}

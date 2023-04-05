@@ -1,0 +1,19 @@
+{
+    "x":0,
+    "circle":1,
+    "triangle":2,
+    "square":3,
+    "lb":4,
+    "rb":5,
+    "lt":6,
+    "rt":7,
+    "select":8,
+    "start":9,
+    "ps":10,
+    "ls":11,
+    "rs":12,
+    "up":13,
+    "down":14,
+    "left":15,
+    "right":16
+}

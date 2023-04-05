@@ -1,0 +1,16 @@
+{
+    "name":"navigate out of maze",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"blind_maze/gamepad_override.json"
+        },
+        {
+            "ref":"blind_maze/blind_nav.json"
+        },
+        {
+            "name":"Out of the maze!",
+            "type":"Stop"
+        }
+    ]
+}

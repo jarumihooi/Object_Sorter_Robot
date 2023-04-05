@@ -1,0 +1,28 @@
+
+{
+    "name":"dist_ang_to_pos",
+    "type":"Multitasker",
+    "children":[
+        {
+            "name":"angle_to_pos",
+            "type":"AngleToPosition",
+            "goal_position_var_name":"goal_pos",
+            "curr_position_var_name":"position",
+            "goal_rotation_var_name":"goal_rotation",
+            "rotation_var_name":"rotation"
+            
+        },
+        {
+            "name":"dist_to_position",
+            "type":"DistToPosition",
+            "goal_position_var_name":"goal_pos",
+            "curr_position_var_name":"position",
+            "dist_var_name":"dist"
+        }
+    ],
+    "blackboard":{
+        "goal_rotation":null,
+        "dist":null
+    },
+    "blackbox":true
+}

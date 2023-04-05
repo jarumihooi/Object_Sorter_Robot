@@ -1,0 +1,9 @@
+{   
+    "name":"** //STRING// name of node **",
+    "type":"ClearAhead",
+    "dist":"** //INT/FLOAT// desired distance to check for objects ahead **",
+    "fov": "** //INT/FLOAT// desired field of view to check for objects ahead",
+    "blackboard":{
+        "/scan":"LaserScan"
+    }
+}

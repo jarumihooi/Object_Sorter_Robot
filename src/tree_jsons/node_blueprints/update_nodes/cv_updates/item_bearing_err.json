@@ -1,0 +1,15 @@
+{
+    "name":"** //STRING// name of node **",
+    "type":"ItemBearingErr",
+    "item_err_var_name":"** //STRING// the name in the blackboard of the angular vel error to the desired item **",
+    "label_dict_var_name":"** //STRING// the name in the blackboard of the model label dictionary **",
+    "item_id":"** //STRING// the name of the item for which the error will be calculated **",
+    "detection_var_name":"** //STRING// the name in the blackboard of the model output **",
+    "camera_resolution":"** //LIST// a list of integers describing the resolution of the camera in the format [width, height] **",
+    "threshold":"** //FLOAT// a decimal between 0 and 1 which represents the accuracy threshold with which to discard model predictions **",
+    "dictionary":{
+        "** //STRING// the name in the blackboard of the angular vel error to the desired item **":"** //INT/FLOAT/NULL// angular velocity error value **",
+        "** //STRING// the name in the blackboard of the model label dictionary **":"** //DICT// label dictionary of model **",
+        "** //STRING// the name in the blackboard of the model output **":"** //DICT// model output **"
+    }
+}

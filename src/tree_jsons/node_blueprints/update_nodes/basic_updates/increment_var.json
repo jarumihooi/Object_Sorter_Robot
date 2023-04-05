@@ -1,0 +1,9 @@
+{   
+    "name":"** //STRING// name of node **",
+    "type":"IncrementVar",
+    "var_name":"** //STRING// the variable name in the blackboard of the number value to increment **",
+    "increment":"** //INT/FLOAT// the amount to increment the value each tick **",
+    "blackboard":{
+        "** //STRING// the variable name in the blackboard of the number value to increment **":"** //FLOAT/INT/NULL// value **"
+    }
+}

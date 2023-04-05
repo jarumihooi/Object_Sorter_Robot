@@ -1,0 +1,5 @@
+{
+    "name":"** //STRING// name of node **",
+    "type":"Multitasker",
+    "children":"** //LIST// a list of json dictionaries that define/reference other nodes **"
+}

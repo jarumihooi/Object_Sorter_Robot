@@ -1,0 +1,8 @@
+{
+    "name":"** name of node **",
+    "type":"BoolVar",
+    "var_name":"** name of the boolean variable in the blackboard to be returned **",
+    "blackboard":{
+        "** //STRING// name of the boolean variable in the blackboard to be returned **":"** //BOOLEAN/NULL// boolean value **"
+    }
+}

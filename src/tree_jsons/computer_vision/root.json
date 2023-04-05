@@ -1,0 +1,24 @@
+{
+    "name" :"root",
+    "type" : "Selector",
+    "children":[
+        {
+            "name":"Is there a wall to the left?",
+            "type":"WallAtAngleRange",
+            "dist":0.3,
+            "start_angle":0,
+            "end_angle":19
+        },
+        {   
+    
+            "name":"detect objects",
+            "type":"MobilenetDetector",
+            "detection_key":"detection",
+            "blackboard":{
+                "/raspicam_node/image/compressed":"CompressedImage",
+                "/scan":"LaserScan",
+                "detection": null
+            }
+        }
+    ]
+}
