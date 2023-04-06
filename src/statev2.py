@@ -15,14 +15,15 @@ class state_pusher(object):
     def initt(self):
         print("Started init")
         rospy.init_node('btree')
+        
 
-        self.start_time = rospy.Time.now()
-        self.start_time_pub = rospy.Publisher('/start_time', String, queue_size=10)
-        pub.publish(self.start_time)
+        # self.start_time = rospy.Time.now()
+        # # self.start_time_pub = rospy.Publisher('/start_time', String, queue_size=10)
+        # pub.publish(self.start_time)
 
-        self.curT = rospy.Time.now()
-        self.curT_pub = rospy.Publisher('/curT', String, queue_size=10)
-        pub.publish(self.curT)
+        # self.curT = rospy.Time.now()
+        # # self.curT_pub = rospy.Publisher('/curT', String, queue_size=10)
+        # pub.publish(self.curT)
 
         tree = rospy.get_param("tree")
         log = rospy.get_param("log")

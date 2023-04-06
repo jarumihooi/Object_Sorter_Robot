@@ -1,3 +1,5 @@
+# Example of finite state machines
+# First we show how to do the example using the pytransitions package
 # Make sure the package is installed: pip install transitions; pip install transitions[diagrams]  
 #
 # In ipython:
