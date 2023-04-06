@@ -45,7 +45,7 @@ class Sorter():
 
     '''Callback func for key_publisher, lets us control state.'''
     def key_cb(self, msg):
-        self.state = msg.data 
+        self.state = msg.data
         # self.last_key_press_time = rospy.Time.now()
         # self.last_pressed = rospy.Time.now().to_sec()
 
