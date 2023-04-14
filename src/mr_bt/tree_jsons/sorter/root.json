@@ -3,7 +3,7 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"avoid_wall/turn_away_from_wall.json"
+
         },
         {
             "name":"move_forward",
@@ -12,15 +12,13 @@
             "ang_vel":0.0
         }, 
         {
-            "name":"reached_position",
-            "type":"ReachedPosition",
-            "goal_pos_var_name":
 
         }
     ],
     "blackboard":{
         "/scan":"LaserScan",
-        "/fiducial_transforms":"FiducialTransformArray",
+        "/raspicam_node/image/compressed": "CompressedImage",
+        "centroid":null,
         "/odom":"Odometry",
         "/clock":"Clock"
     }
