@@ -1,6 +1,6 @@
 <launch>
     <!-- This launch file: V1! 
-         the correct file to launch. -->
+         old -->
     <!-- See readme if doesn't run. -->
     <!-- roslaunch mr_bt mt_bt.launch tree:=move_to_position -->
     <!-- roslaunch COSI119-final-objectSorter sorterv1.launch tree:=move_to_position -->

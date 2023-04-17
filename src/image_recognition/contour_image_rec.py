@@ -27,7 +27,7 @@ class Follower:
         self.lostcount = 0
 
     def image_callback(self, msg):
-        print('img_callback')
+        # print('img_callback')
 
         converter = ImageTools()
 

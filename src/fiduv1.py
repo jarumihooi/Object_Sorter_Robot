@@ -5,6 +5,7 @@
 import rospy
 from geometry_msgs.msg import TransformStamped, Twist
 from fiducial_msgs.msg import FiducialTransform, FiducialTransformArray
+from std_msgs.msg import Bool # for the claw
 import tf2_ros
 from math import pi, sqrt, atan2
 import traceback
@@ -40,7 +41,9 @@ class Follow:
         self.suppressCmd = False
 
         # The name of the coordinate frame of the fiducial we are interested in
-        self.fid_list = rospy.get_param("~target_fiducial", ["fid103", "fid107", "fid112", "fid109", "fid000"])
+        # self.fid_list = rospy.get_param("~target_fiducial", ["fid103", "fid107", "fid112", "fid109", "fid000"])
+        self.fid_list = rospy.get_param("~target_fiducial", ["fid104", "fid108", "fid100", "fid109", "fid000"])
+
         self.target_fiducial = rospy.get_param("~target_fiducial", "fid103")#, "fid106"])
         self.target_fiducial2 = rospy.get_param("~target_fiducial", "fid107")
 
@@ -73,7 +76,7 @@ class Follow:
         self.hysteresis_count = rospy.get_param("~hysteresis_count", 20)
 
         # How many loop iterations to keep rotating after fiducial disappears
-        self.max_lost_count = rospy.get_param("~max_lost_count", 400)
+        self.max_lost_count = rospy.get_param("~max_lost_count", 800) #400
 
         # Subscribe to incoming transforms
         rospy.Subscriber("/fiducial_transforms", FiducialTransformArray, self.newTf)
