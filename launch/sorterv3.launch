@@ -1,7 +1,8 @@
 <launch>
   <!-- This launch file: V3! 
     This is the correct file to launch. -->
-  <!-- See readme if doesn't run. -->
+  <!-- TO LAUNCH: $ roslaunch object_sorter sorterv3.launch
+    See readme if doesn't run. -->
 
   
   <!-- run rtq-image-view -->
