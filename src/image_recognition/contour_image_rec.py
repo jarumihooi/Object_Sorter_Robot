@@ -60,6 +60,8 @@ class Follower:
 
         cv2.imshow("mask", mask)
 
+        cx = 0
+        cy = 0
 
         ret,thresh = cv2.threshold(mask, 40, 255, 0)
         if (int(cv2.__version__[0]) > 3):
@@ -75,10 +77,29 @@ class Follower:
             c = max(contours, key = cv2.contourArea)
             x,y,w,h = cv2.boundingRect(c)
 
+            cx = x + (w/2)
+            cy = y + (h/2)
+
             # draw the biggest contour (c) in green
             cv2.rectangle(output,(x,y),(x+w,y+h),(0,255,0),2)
 
         # show the images
+        cv2.circle(image, (int(cx), int(cy)), 8, (255,255,0), -1)
+
+        #following test**********************
+        h, w, d = image.shape
+
+        
+        err = cx - w/2
+        self.twist.linear.x = 0.2
+        ang_vel = ang_vel_control(-float(err) / 100)
+
+        print("ang_vel= "+str(ang_vel))
+            
+        self.twist.angular.z = ang_vel
+        self.cmd_vel_pub.publish(self.twist)
+        #*************************
+
         cv2.imshow("Result", np.hstack([image, output]))
         cv2.waitKey(3)
 
