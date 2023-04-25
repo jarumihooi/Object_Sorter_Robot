@@ -22,7 +22,11 @@ from transitions.extensions import GraphMachine
 
 class FSM(object):
     def __init__(self):
-         self.objects_left = 1
+        rospy.init_node('fsm_state')
+        self.objects_left = 1
+
+        # pubs
+        self.state_sub = rospy.Publisher("/state", String, queue_size=1)
    
 
     # these are the callbacks for when a state changes. they must be applied to the states directly. 
