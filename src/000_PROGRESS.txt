@@ -1,0 +1,26 @@
+This tells us what we are working on. 
+TODO =========================
+Connect the parts. Precision grab the objects? 
+Build a wooden staging object for the cans? 
+
+
+EXISTING PROGRESS ===================
+Week#1 J ====
+Currently, I've added a bunch of extra useful code to the repo. 
+However, I'm really only working on main.py. 
+
+The launch file will launch main.py, key_publisher.py for manual control, and rqt_image_view
+Week #2 ====
+J : created launch file. 
+
+
+Week #4 ====
+Isaac has the image and centroid done. 
+Jeremy: 
+fsm_demo3.py shows the basic state diagram of the project. I'd like to make this into state_implementer
+soon. 
+
+
+From here we can see if we can get diff parts of the project to deliver cmd_vel controls to the robot.
+During Goto_loading, we can use fidu. 
+During Cv_find,  we can use cv and centroid. 
