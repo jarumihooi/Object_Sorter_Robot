@@ -25,11 +25,11 @@ from std_msgs.msg import Bool, String
 class FSM(object):
     def __init__(self):
         rospy.init_node('fsm')
-        self.rate = rospy.Rate(30)
+        self.rate = rospy.Rate(2)
         self.objects_left = 1
 
         # pubs
-        self.state_sub = rospy.Publisher("/state", String, queue_size=1)
+        self.state_pub = rospy.Publisher("/state", String, queue_size=1)
 
         # init the fsm 
         states = [
@@ -61,9 +61,15 @@ class FSM(object):
 
     def run(self):
         print("starting fsm")
-        print("fsm thinks state is", self.state)
+        # print("fsm thinks state is", self.state)
         while not rospy.is_shutdown():
+            self.state_pub.publish(self.state)
             self.rate.sleep()
+
+    
+if __name__ == '__main__':
+    fsm = FSM()
+    fsm.run()
 
 # =====
 # if __name__ == '__main__':
