@@ -7,7 +7,7 @@ bf: means bugfix
 import rospy
 from geometry_msgs.msg import TransformStamped, Twist
 # from fiducial_msgs.msg import FiducialTransform, FiducialTransformArray
-from std_msgs.msg import Bool, String # for the claw
+from std_msgs.msg import Bool, String # for the Bool/claw, String/state
 import tf2_ros
 from math import pi, sqrt, atan2
 import traceback
