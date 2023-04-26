@@ -97,7 +97,7 @@ class Follower:
         print("ang_vel= "+str(ang_vel))
             
         self.twist.angular.z = ang_vel
-        self.cmd_vel_pub.publish(self.twist)
+        #self.cmd_vel_pub.publish(self.twist) I TURNED THIS OFF ISAAC -DAVID (<3)
         #*************************
 
         cv2.imshow("Result", np.hstack([image, output]))
