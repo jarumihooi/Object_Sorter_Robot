@@ -1,7 +1,10 @@
 <launch>
   <!-- This launch file: V3! 
-    This is the correct file to launch. -->
-  <!-- TO LAUNCH: $ roslaunch object_sorter sorterv3.launch
+    This is the current production launch file. It should contain code that works. This did work, it
+    currently doesn't anymore on platform2
+    Known issue: doesn't open up image windows in vnc -->
+  <!-- TO LAUNCH: $ roslaunch object_sorter prod_v3.launch
+    See below for extra install instructions for first time use. 
     See readme if doesn't run. -->
 
   
@@ -40,6 +43,8 @@
   </node>
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="cam_to_base2" args="0.1 0 0 0 0 0 /base_link /raspicam 100" /> -->
+  <!-- <node pkg="object_sorter" type="01_main_control.py" name="main" output="screen"/> -->
+  <!-- <node pkg="object_sorter" type="fsm_state.py" name="fsm" output="screen" /> -->
   <node pkg="object_sorter" type="contour_image_rec.py" name="contour" output="screen"/>
   <node pkg="object_sorter" type="manual_control.py" name="manual" output="screen" launch-prefix="xterm -e"/> 
   <node pkg="object_sorter" type="key_publisher.py" name="key" output="screen" launch-prefix="xterm -e"/> 
@@ -50,6 +55,16 @@
 
   <!-- Extra Notes ====
   The package name is stored in the package.xml, it was renamed to: 
-  "object_sorter" -->
+  "object_sorter" 
+  First time install packages ==== 
+  Run this on platform2. Use "$ roslaunch platform full_bringup.launch" to bringup. 
+  sudo apt-get update
+  sudo apt-get install ros-noetic-aruco-detect
+  sudo apt-get install ros-noetic-fiducials
+  sudo apt-get install ros-noetic-fiducial-msgs
+  sudo apt-get install xterm
+  
+  -->
+
 
 </launch>
