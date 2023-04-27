@@ -17,7 +17,7 @@ class Follower:
     def __init__(self):
         self.bridge = cv_bridge.CvBridge()
         #self.image_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, self.image_callback)
-        self.image_sub = rospy.Subscriber('/raspicam_node/image/compressed', CompressedImage, self.image_callback)
+        self.image_sub = rospy.Subscriber('/raspicam_node/image/compressed', CompressedImage, self.image_callback, buff_size=2**24)
         #self.image_sub = rospy.Subscriber('/raspicam_node/image', Image, self.image_callback)
 
         self.centroid_pub = rospy.Publisher('centroid', CompressedImage, queue_size=1)
@@ -94,7 +94,7 @@ class Follower:
         self.twist.linear.x = 0.2
         ang_vel = ang_vel_control(-float(err) / 100)
 
-        print("ang_vel= "+str(ang_vel))
+        # print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
             
         self.twist.angular.z = ang_vel
         #self.cmd_vel_pub.publish(self.twist) I TURNED THIS OFF ISAAC -DAVID (<3)
