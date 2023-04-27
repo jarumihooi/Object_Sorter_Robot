@@ -1,7 +1,7 @@
 <launch>
   <!-- This launch file: V4! INPROGRESS file to launch. 
-    Test test
-    TO LAUNCH: $ roslaunch object_sorter ip_v4.launch
+
+    TO LAUNCH: $ roslaunch object_sorter ip_v5.launch
     See below/readme if doesn't run. -->
 
   
