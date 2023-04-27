@@ -5,7 +5,7 @@
 import rospy
 from geometry_msgs.msg import TransformStamped, Twist
 from fiducial_msgs.msg import FiducialTransform, FiducialTransformArray
-from std_msgs.msg import Bool # for the claw
+from std_msgs.msg import Bool, String # for the Bool/claw, String/state
 import tf2_ros
 from math import pi, sqrt, atan2
 import traceback
@@ -16,6 +16,7 @@ import sys
 def degrees(r):
     return 180.0 * r / math.pi
 
+'''Used for waiting'''
 
 
 class Follow:
@@ -23,8 +24,8 @@ class Follow:
     Constructor for our class
     """
     def __init__(self):
-        rospy.init_node('follow')
-        print("Starting follow.py")
+        rospy.init_node('fidu')
+        print("Starting fidu.py")
 
         # Set up a transform listener so we can lookup transforms in the past
         self.tfBuffer = tf2_ros.Buffer(rospy.Time(30))
@@ -83,6 +84,17 @@ class Follow:
         self.fid_x = self.min_dist
         self.fid_y = 0
         self.got_fid = False
+
+        # sub to state: 
+        self.state = "Dew_it"
+        # self.state_sub = rospy.Subscriber("/state", String, self.state_cb)
+        self.timer = rospy.Timer(rospy.Duration(4), self.print_message)
+
+    def state_cb(self, msg):
+        self.state = msg.data #bf: needed .data
+
+    def print_message(self, event):
+        print("This message is printed every 20 seconds. State:", self.state)
 
     '''This method ends the program'''
     def shutdown(self):
@@ -179,95 +191,107 @@ class Follow:
         # print("running")
         # While our node is running
         while not rospy.is_shutdown():
-            # Calculate the error in the x and y directions
-            forward_error = self.fid_x - self.min_dist
-            lateral_error = self.fid_y
+            if (self.state == "Dew_it"):
 
-            # Calculate the amount of turning needed towards the fiducial
-            # atan2 works for any point on a circle (as opposed to atan)
-            angular_error = math.atan2(self.fid_y, self.fid_x)
+            
 
-            print("Errors: forward %f lateral %f angular %f" % \
-              (forward_error, lateral_error, degrees(angular_error)) )
+                # Calculate the error in the x and y directions
+                forward_error = self.fid_x - self.min_dist
+                lateral_error = self.fid_y
 
-            if self.got_fid:
-                times_since_last_fid = 0
-            else:
-                times_since_last_fid += 1
+                # Calculate the amount of turning needed towards the fiducial
+                # atan2 works for any point on a circle (as opposed to atan)
+                angular_error = math.atan2(self.fid_y, self.fid_x)
 
-            if forward_error > self.max_dist:
-                print("Fiducial is too far away" )
-                linSpeed = 0
-                angSpeed = 0
-            # A fiducial was detected since last iteration of this loop
-            elif self.got_fid:
-                if (forward_error < self.min_dist): 
-                    print("Deleted", self.fid_list[0])
-                    del self.fid_list[0]
-                    print("self.fid_list", self.fid_list)
+                print("Errors: forward %f lateral %f angular %f" % \
+                (forward_error, lateral_error, degrees(angular_error)) )
 
-                # Set the turning speed based on the angular error
-                # Add some damping based on the previous speed to smooth the motion 
-                angSpeed = angular_error * self.angular_rate - angSpeed / 2.0
-                # Make sure that the angular speed is within limits
-                if angSpeed < -self.max_angular_rate:
-                    angSpeed = -self.max_angular_rate
-                if angSpeed > self.max_angular_rate:
-                    angSpeed = self.max_angular_rate
-
-                # Set the forward speed based distance
-                linSpeed = forward_error * self.linear_rate
-                # Make sure that the angular speed is within limits
-                if linSpeed < -self.max_linear_rate:
-                    linSpeed = -self.max_linear_rate
-                if linSpeed > self.max_linear_rate:
-                    linSpeed = self.max_linear_rate
-
-            # Hysteresis, don't immediately stop if the fiducial is lost
-            elif not self.got_fid and times_since_last_fid < self.hysteresis_count:
-                # Decrease the speed (assuming linear decay is <1)
-                linSpeed *= self.linear_decay
-
-            # Try to refind fiducial by rotating
-            elif self.got_fid == False and times_since_last_fid < self.max_lost_count:
-                # Stop moving forward
-                linSpeed = 0
-                # Keep turning in the same direction
-                if angSpeed < 0:
-                    angSpeed = -self.lost_angular_rate
-                elif angSpeed > 0:
-                    angSpeed = self.lost_angular_rate
+                if self.got_fid:
+                    times_since_last_fid = 0
                 else:
+                    times_since_last_fid += 1
+
+                if forward_error > self.max_dist:
+                    print("Fiducial is too far away" )
+                    linSpeed = 0
                     angSpeed = 0
-                print("Try keep rotating to refind", self.fid_list[0], ": try# %d" % times_since_last_fid)
-            else:
-                print("I give up on life.")
-                angSpeed = 0
-                linSpeed = 0
-                self.shutdown()
+                # A fiducial was detected since last iteration of this loop
+                elif self.got_fid:
+                    if (forward_error < self.min_dist): 
+                        print("Deleted", self.fid_list[0])
+                        del self.fid_list[0]
+                        print("self.fid_list", self.fid_list)
+
+                    # Set the turning speed based on the angular error
+                    # Add some damping based on the previous speed to smooth the motion 
+                    angSpeed = angular_error * self.angular_rate - angSpeed / 2.0
+                    # Make sure that the angular speed is within limits
+                    if angSpeed < -self.max_angular_rate:
+                        angSpeed = -self.max_angular_rate
+                    if angSpeed > self.max_angular_rate:
+                        angSpeed = self.max_angular_rate
+
+                    # Set the forward speed based distance
+                    linSpeed = forward_error * self.linear_rate
+                    # Make sure that the angular speed is within limits
+                    if linSpeed < -self.max_linear_rate:
+                        linSpeed = -self.max_linear_rate
+                    if linSpeed > self.max_linear_rate:
+                        linSpeed = self.max_linear_rate
+
+                # Hysteresis, don't immediately stop if the fiducial is lost
+                elif not self.got_fid and times_since_last_fid < self.hysteresis_count:
+                    # Decrease the speed (assuming linear decay is <1)
+                    linSpeed *= self.linear_decay
+
+                # Try to refind fiducial by rotating
+                elif self.got_fid == False and times_since_last_fid < self.max_lost_count:
+                    # Stop moving forward
+                    linSpeed = 0
+                    # Keep turning in the same direction
+                    if angSpeed < 0:
+                        angSpeed = -self.lost_angular_rate
+                    elif angSpeed > 0:
+                        angSpeed = self.lost_angular_rate
+                    else:
+                        angSpeed = 0
+                    print("Try keep rotating to refind", self.fid_list[0], ": try# %d" % times_since_last_fid)
+                else:
+                    print("I give up on life.")
+                    angSpeed = 0
+                    linSpeed = 0
+                    self.shutdown()
+                    
+
+                print("Speeds: linear %f angular %f" % (linSpeed, angSpeed) )
+
+                # Create a Twist message from the velocities and publish it
+                # Avoid sending repeated zero speed commands, so teleop
+                # can work
+                zeroSpeed = (angSpeed == 0 and linSpeed == 0)
+                if not zeroSpeed:
+                    self.suppressCmd = False
+                # print("zeroSpeed:", zeroSpeed, "self.suppressCmd:", self.suppressCmd)
+                if not self.suppressCmd:
+                    twist = Twist()
+                    twist.angular.z = -angSpeed #/3 #2?
+                    # twist.angular.z = 0
+                    twist.linear.x = linSpeed
+                    self.cmdPub.publish(twist)
+                    if zeroSpeed:
+                        self.suppressCmd = True
+
+                # We already acted on the current fiducial
+                self.got_fid = False
+                rate.sleep()
+            # end if dew_it
+            else :
                 
-
-            print("Speeds: linear %f angular %f" % (linSpeed, angSpeed) )
-
-            # Create a Twist message from the velocities and publish it
-            # Avoid sending repeated zero speed commands, so teleop
-            # can work
-            zeroSpeed = (angSpeed == 0 and linSpeed == 0)
-            if not zeroSpeed:
-                self.suppressCmd = False
-            # print("zeroSpeed:", zeroSpeed, "self.suppressCmd:", self.suppressCmd)
-            if not self.suppressCmd:
-                twist = Twist()
-                twist.angular.z = -angSpeed #/3 #2?
-                # twist.angular.z = 0
-                twist.linear.x = linSpeed
-                self.cmdPub.publish(twist)
-                if zeroSpeed:
-                    self.suppressCmd = True
-
-            # We already acted on the current fiducial
-            self.got_fid = False
-            rate.sleep()
+                rate.sleep()
+            # end else
+        # end while
+    # end def run()
+# end class Fidu
 
 
 if __name__ == "__main__":

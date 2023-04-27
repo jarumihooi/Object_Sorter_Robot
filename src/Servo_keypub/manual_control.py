@@ -41,10 +41,10 @@ def key_cb(msg):
 
     #Open claw
     if state == 'o':
-        servo_pub.publish(False)
+        servo_pub.publish(True)
     #Close claw
     elif state == 'c':
-        servo_pub.publish(True)
+        servo_pub.publish(False)
     #Go forward
     elif state == 'w':
         move_cmd.linear.x = linear_speed
