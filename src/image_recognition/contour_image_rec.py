@@ -21,7 +21,7 @@ class Follower:
         #self.image_sub = rospy.Subscriber('/raspicam_node/image', Image, self.image_callback)
 
         self.centroid_pub = rospy.Publisher('centroid', CompressedImage, queue_size=1)
-        self.direction_pub = rospy.Publisher('direction_cmd_vel', Twist, queue_size=1)
+        self.direction_pub = rospy.Publisher('/color_direction_twist', Twist, queue_size=1)
         self.twist = Twist()
         self.logcount = 0
         self.lostcount = 0
