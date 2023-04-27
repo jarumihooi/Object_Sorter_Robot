@@ -21,7 +21,7 @@ class Follower:
         #self.image_sub = rospy.Subscriber('/raspicam_node/image', Image, self.image_callback)
 
         self.centroid_pub = rospy.Publisher('centroid', CompressedImage, queue_size=1)
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+        self.direction_pub = rospy.Publisher('direction_cmd_vel', Twist, queue_size=1)
         self.twist = Twist()
         self.logcount = 0
         self.lostcount = 0
@@ -97,7 +97,7 @@ class Follower:
         # print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
             
         self.twist.angular.z = ang_vel
-        #self.cmd_vel_pub.publish(self.twist) I TURNED THIS OFF ISAAC -DAVID (<3)
+        self.direction_pub.publish(self.twist) 
         #*************************
 
         cv2.imshow("Result", np.hstack([image, output]))
