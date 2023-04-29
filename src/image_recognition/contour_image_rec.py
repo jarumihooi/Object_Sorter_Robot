@@ -5,6 +5,8 @@ from sensor_msgs.msg import CompressedImage, Image
 from geometry_msgs.msg import Twist
 import math
 import numpy as np
+from std_msgs.msg import Bool
+
 from image_tools import ImageTools
 
 
@@ -22,12 +24,22 @@ class Follower:
 
         self.centroid_pub = rospy.Publisher('centroid', CompressedImage, queue_size=1)
         self.direction_pub = rospy.Publisher('/color_direction_twist', Twist, queue_size=1)
+
+        #TODO for testing only, remove after
+        self.servo_pub = rospy.Publisher('/servo', Bool, queue_size=1)#publishes commands to the claw
+
+
         self.twist = Twist()
         self.logcount = 0
         self.lostcount = 0
 
     def image_callback(self, msg):
         # print('img_callback')
+
+        #to prevent errors in the print statement when there are no contours on screen
+        w=0
+
+        #self.servo_pub.publish(True)
 
         converter = ImageTools()
 
@@ -44,8 +56,12 @@ class Follower:
         lower_yellow = np.array([ 40, 0, 0]) 
         upper_yellow = np.array([ 120, 255, 255])
 
-        lower_red = np.array([160,50,50])
-        upper_red = np.array([180,255,255])
+        #ideal color is 0, 100, 95 #prevously 160-180
+        lower_red = np.array([170,80,80])
+        upper_red = np.array([190,255,255])
+
+        lower_green = np.array([50,80,80])
+        upper_green = np.array([90,255,255])
         
         # mask = cv2.inRange(hsv,  lower_red, upper_red)
         # masked = cv2.bitwise_and(image, image, mask=mask)
@@ -55,7 +71,7 @@ class Follower:
         # find the colors within the specified boundaries and apply
 
         # the mask
-        mask = cv2.inRange(hsv, lower_red, upper_red)
+        mask = cv2.inRange(hsv, lower_green, upper_green)
         output = cv2.bitwise_and(image, image, mask=mask)
 
         cv2.imshow("mask", mask)
@@ -86,12 +102,21 @@ class Follower:
         # show the images
         cv2.circle(image, (int(cx), int(cy)), 8, (255,255,0), -1)
 
+        print("rect width:   " + str(w))
+
         #following test**********************
-        h, w, d = image.shape
+        h2, w2, d2 = image.shape
+        
+        #sets unused twist value to one to signal main file to close claw once close enough
+        #ideal value so far is 220
+        if(w > 200):
+            self.twist.linear.y = 1.0
+        else:
+            self.twist.linear.y = 0
 
         
-        err = cx - w/2
-        self.twist.linear.x = 0.2
+        err = cx - w2/2
+       #self.twist.linear.x = 0.2
         ang_vel = ang_vel_control(-float(err) / 100)
 
         # print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
@@ -103,47 +128,6 @@ class Follower:
         cv2.imshow("Result", np.hstack([image, output]))
         cv2.waitKey(3)
 
-    # clear all but a 20 pixel band near the top of the image
-        # h, w, d = image.shape
-        # search_top = int(3 * h /4)
-        # search_bot = search_top + 20
-        # mask[0:search_top, 0:w] = 0
-        # mask[search_bot:h, 0:w] = 0
-        
-
-
-    # # Compute the "centroid" and display a red circle to denote it
-    #     M = cv2.moments(mask)
-    #     self.logcount += 1
-    #     print("M00 %d %d" % (M['m00'], self.logcount))
-        
-        
-    #     if M['m00'] > 0:
-    #         cx = int(M['m10']/M['m00']) + 100
-    #         cy = int(M['m01']/M['m00'])
-    #         cv2.circle(image, (cx, cy), 20, (0,0,255), -1)
-
-    #         # Move at 0.2 M/sec
-    #         # add a turn if the centroid is not in the center
-    #         # Hope for the best. Lots of failure modes.
-    #         err = cx - w/2
-    #         self.twist.linear.x = 0.2
-    #         ang_vel = ang_vel_control(-float(err) / 100)
-
-    #         print("ang_vel= "+str(ang_vel))
-            
-    #         self.twist.angular.z = ang_vel
-    #         #self.cmd_vel_pub.publish(self.twist)
-    #         #self.centroid_pub.publish(self.bridge.cv2_to_imgmsg(image))
-        
-    #     else:
-    #         self.twist.linear.x = 0
-    #         self.twist.angular.z = 0.3
-    #         print("twist= " +str(self.twist.angular.z))
-    #       #  self.cmd_vel_pub.publish(self.twist)
-
-        # cv2.imshow("image", image)
-        # cv2.waitKey(3)
 
 print('running')
 rospy.init_node('follower')
