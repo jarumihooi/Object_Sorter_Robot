@@ -1,0 +1,68 @@
+<launch>
+  <!-- This launch file: V5! WORKING file to launch. 
+    Known bugs: cv motion control and color switch need testing. 
+
+    TO LAUNCH: $ roslaunch object_sorter prod_v5.launch
+    See below/readme if doesn't run. -->
+
+  
+  <!-- run rtq-image-view -->
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/fiducial_images" />
+  </node>
+
+  <!-- Run the aruco_detect node -->
+  <arg name="camera" default="/raspicam_node"/>
+  <arg name="image" default="image"/>
+  <arg name="transport" default="compressed"/>
+  <arg name="fiducial_len" default="0.14"/>
+  <arg name="dictionary" default="7"/>
+  <arg name="do_pose_estimation" default="true"/>
+  <!-- If vis_msgs set to true, pose estimation will be published with ROS standard vision_msgs -->
+  <arg name="vis_msgs" default="false"/>
+  <arg name="ignore_fiducials" default="" />
+  <arg name="fiducial_len_override" default="" />
+  <arg name="verbose" default="false"/>
+
+  <node pkg="aruco_detect" name="aruco_detect"
+    type="aruco_detect" output="screen" respawn="false">
+    <param name="image_transport" value="$(arg transport)"/>
+    <param name="publish_images" value="true" />
+    <param name="fiducial_len" value="$(arg fiducial_len)"/>
+    <param name="dictionary" value="$(arg dictionary)"/>
+    <param name="do_pose_estimation" value="$(arg do_pose_estimation)"/>
+    <param name="vis_msgs" value="$(arg vis_msgs)"/>
+    <param name="ignore_fiducials" value="$(arg ignore_fiducials)"/>
+    <param name="fiducial_len_override" value="$(arg fiducial_len_override)"/>
+    <param name="verbose" value="$(arg verbose)"/>
+    <remap from="camera/compressed" 
+        to="$(arg camera)/$(arg image)/$(arg transport)"/>
+    <remap from="camera_info" to="$(arg camera)/camera_info"/>
+  </node>
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="cam_to_base2" args="0.1 0 0 0 0 0 /base_link /raspicam 100" /> -->
+  <node pkg="object_sorter" type="main_control_v2.py" name="main" output="screen"/>
+  <!-- <node pkg="object_sorter" type="fsm_state.py" name="fsm" output="screen" /> -->
+  <node pkg="object_sorter" type="contour_image_rec.py" name="contour" output="screen"/>
+  <!-- <node pkg="object_sorter" type="manual_control.py" name="manual" output="screen" launch-prefix="xterm -e"/>  -->
+  <!-- <node pkg="object_sorter" type="key_publisher.py" name="key" output="screen" launch-prefix="xterm -e"/>  -->
+  <!-- <node pkg="object_sorter" type="fiduv4.py" name="fidu" output="screen"/>  -->
+  <node pkg="object_sorter" type="fiducial_recognition.py" name="recogonly" output="screen"/> 
+
+
+
+
+  <!-- Extra Notes ====
+  The package name is stored in the package.xml, it was renamed to: 
+  "object_sorter" 
+  First time install packages ==== 
+  sudo apt-get update
+  sudo apt-get install ros-noetic-aruco-detect
+  sudo apt-get install ros-noetic-fiducials
+  sudo apt-get install ros-noetic-fiducial-msgs
+  sudo apt-get install xterm
+  check if the image is as expected: for platform2, expecting: /raspicam_node/image/compressed
+
+  
+  -->
+</launch>
