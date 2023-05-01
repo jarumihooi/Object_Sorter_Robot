@@ -27,9 +27,15 @@ class FSM(object):
         rospy.init_node('fsm')
         self.rate = rospy.Rate(2)
         self.objects_left = 1
+        self.trigger = ""
 
         # pubs
         self.state_pub = rospy.Publisher("/state", String, queue_size=1)
+
+        #sub
+        self.trigger_sub = rospy.Subscriber("trigger", String, self.trigger_cb, queue_size=1)
+
+    
 
         # init the fsm 
         states = [
@@ -55,9 +61,17 @@ class FSM(object):
     # end init()
 
     # these are the callbacks for when a state changes. they must be applied to the states directly. 
+    def trigger_cb(self, msg):
+        # this is the cb when it gets a trigger, then calls triggerr() to change. 
+        self.trigger = msg.data
+        self.triggerr()
     def remaining_cb(self): print("objects_left", self.objects_left)
     def pickedup(self):print("after: we picked up a can")
     def dropped_off_cb(self): self.objects_left -= 1; print("objects_left", self.objects_left)
+
+    def triggerr(self):
+        if self.trigger == "at_loading":
+            fsm.at_loading()
 
     def run(self):
         print("starting fsm")
