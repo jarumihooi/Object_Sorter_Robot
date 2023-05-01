@@ -28,10 +28,16 @@ class Follower:
         #TODO for testing only, remove after
         self.servo_pub = rospy.Publisher('/servo', Bool, queue_size=1)#publishes commands to the claw
 
+        self.color_pub = rospy.Subscriber('/color', String, set_color_cb)
+        self.target_color = "green"
+
 
         self.twist = Twist()
         self.logcount = 0
         self.lostcount = 0
+
+    def set_color_cb(self, msg):
+        self.target_color = msg
 
     def image_callback(self, msg):
         # print('img_callback')
@@ -64,15 +70,17 @@ class Follower:
         lower_green = np.array([30,80,80])
         upper_green = np.array([85,255,255])
         
-        # mask = cv2.inRange(hsv,  lower_red, upper_red)
-        # masked = cv2.bitwise_and(image, image, mask=mask)
-        # cv2.imshow("mask", mask)
-        # cv2.imshow("masked", masked)
+        lower_target = lower_green
+        upper_target = upper_green
 
-        # find the colors within the specified boundaries and apply
+
+        if target_color == "red":
+            lower_target = lower_red
+            upper_target = upper_red
+
 
         # the mask
-        mask = cv2.inRange(hsv, lower_green, upper_green)
+        mask = cv2.inRange(hsv, lower_target, upper_target)
         output = cv2.bitwise_and(image, image, mask=mask)
 
         cv2.imshow("mask", mask)

@@ -14,7 +14,7 @@ import traceback
 import math
 import time
 import sys
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, String
 
 
 def degrees(r):
@@ -70,6 +70,7 @@ class Sorter:
         # CORE pub subs ====
         self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
         self.servo_pub = rospy.Publisher('/servo', Bool, queue_size=1)#publishes commands to the claw
+        self.color_pub = rospy.publisher('/color', String, queue_size=1)#publishes the color the robot is looking for
 
 
         self.color_sub = rospy.Subscriber("/color_direction_twist", Twist, self.color_cb) #subscribes to the image recognition node
@@ -127,6 +128,8 @@ class Sorter:
 
         while not rospy.is_shutdown():
             self.print_state()
+
+            color_pub.publish(self.target_color)
             finalTwist = Twist()
 
             if self.state == "find_item":
