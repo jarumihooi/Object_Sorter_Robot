@@ -1,7 +1,7 @@
 <launch>
-  <!-- This launch file: V4! INPROGRESS file to launch. 
+  <!-- This launch file: V4! CURRENT file to launch. 
 
-    TO LAUNCH: $ roslaunch object_sorter ip_v4.launch
+    TO LAUNCH: $ roslaunch object_sorter prod_v4.launch
     See below/readme if doesn't run. -->
 
   
@@ -40,7 +40,7 @@
   </node>
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="cam_to_base2" args="0.1 0 0 0 0 0 /base_link /raspicam 100" /> -->
-  <node pkg="object_sorter" type="01_main_control.py" name="main" output="screen"/>
+  <node pkg="object_sorter" type="01_main_control_fsm_v1.py" name="main" output="screen"/>
   <node pkg="object_sorter" type="fsm_state.py" name="fsm" output="screen" />
   <node pkg="object_sorter" type="contour_image_rec.py" name="contour" output="screen"/>
   <!-- <node pkg="object_sorter" type="manual_control.py" name="manual" output="screen" launch-prefix="xterm -e"/>  -->
@@ -61,6 +61,10 @@
   sudo apt-get install ros-noetic-fiducial-msgs
   sudo apt-get install xterm
   check if the image is as expected: for platform2, expecting: /raspicam_node/image/compressed
+  You may need sudo:
+  pip install transitions
+  pip install transitions[diagrams]  
+  # sudo apt-get install graphviz graphviz-dev / this one isnt required. only for graph picture
 
   
   -->

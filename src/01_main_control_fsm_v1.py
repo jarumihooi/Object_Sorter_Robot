@@ -37,7 +37,7 @@ class Sorter:
         self.remaining = 3 # cans
 
         # CORE pub subs ====
-        self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
+        # self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
         self.state_sub = rospy.Subscriber("/state", String, self.state_cb)
 
     # callbacks =====
