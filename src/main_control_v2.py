@@ -156,7 +156,7 @@ class Sorter:
 
                 
 
-                if self.forward_error < 0.3 and self.aquired:
+                if self.forward_error < 0.5 and self.aquired:
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
                     self.state = "return_to_start"

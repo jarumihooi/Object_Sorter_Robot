@@ -60,8 +60,9 @@ class Follower:
         lower_red = np.array([170,80,80])
         upper_red = np.array([190,255,255])
 
-        lower_green = np.array([50,80,80])
-        upper_green = np.array([90,255,255])
+            #50-90 ideal
+        lower_green = np.array([30,80,80])
+        upper_green = np.array([85,255,255])
         
         # mask = cv2.inRange(hsv,  lower_red, upper_red)
         # masked = cv2.bitwise_and(image, image, mask=mask)
