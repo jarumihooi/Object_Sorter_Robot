@@ -40,13 +40,13 @@
   </node>
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="cam_to_base2" args="0.1 0 0 0 0 0 /base_link /raspicam 100" /> -->
-  <node pkg="object_sorter" type="01_main_control.py" name="main" output="screen"/>
-  <node pkg="object_sorter" type="fsm_state.py" name="fsm" output="screen" />
+  <node pkg="object_sorter" type="main_control_v2.py" name="main" output="screen"/>
+  <!-- <node pkg="object_sorter" type="fsm_state.py" name="fsm" output="screen" /> -->
   <node pkg="object_sorter" type="contour_image_rec.py" name="contour" output="screen"/>
   <!-- <node pkg="object_sorter" type="manual_control.py" name="manual" output="screen" launch-prefix="xterm -e"/>  -->
   <!-- <node pkg="object_sorter" type="key_publisher.py" name="key" output="screen" launch-prefix="xterm -e"/>  -->
-  <node pkg="object_sorter" type="fiduv4.py" name="fidu" output="screen"/> 
-  <!-- <node pkg="object_sorter" type="fiducial_recognition.py" name="recog-only" output="screen"/>  -->
+  <!-- <node pkg="object_sorter" type="fiduv4.py" name="fidu" output="screen"/>  -->
+  <node pkg="object_sorter" type="fiducial_recognition.py" name="recog-only" output="screen"/> 
 
 
 

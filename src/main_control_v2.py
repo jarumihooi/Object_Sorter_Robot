@@ -39,7 +39,7 @@ class Sorter:
         self.mixed_target_fiducial = rospy.get_param("~target_fiducial", "fid109")
         
         #whether the target fiducial has been found, used to solve edge cases related to state changes
-        self.aquired = False
+        self.acquired = False
 
 
         self.target_fiducial = self.red_target_fiducial
@@ -84,7 +84,7 @@ class Sorter:
     def fid_cb(self, msg):
 
         if msg.child_frame_id == self.target_fiducial:
-            self.aquired = True
+            self.acquired = True
             ct = msg.transform.translation
             cr = msg.transform.rotation
             #print ("T_fidBase %lf %lf %lf %lf %lf %lf %lf\n" % \
@@ -116,7 +116,7 @@ class Sorter:
         # ps += "\n Pos X undef, Pos Y undef, LinSpd:"+str(self.LinSpd)+" AngSpd:"+str(self.AngSpd)
         # ps += "\n Other vars here. Remaining: "+str(self.remaining)
         print(ps)
-        print("ac:    "+ str(self.aquired))
+        print("ac:    "+ str(self.acquired))
 
 
 
@@ -138,7 +138,7 @@ class Sorter:
                 elif self.colorTwist.linear.y == 1.0:
                     self.servo_pub.publish(False) #close
                     self.state = "deliver_item"
-                    self.aquired = False
+                    self.acquired = False
 
 
                 finalTwist.linear.x = self.linear_rate
@@ -156,12 +156,12 @@ class Sorter:
 
                 
 
-                if self.forward_error < 0.3 and self.aquired:
+                if self.forward_error < 0.3 and self.acquired:
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
                     self.state = "return_to_start"
                     self.target_fiducial = self.mixed_target_fiducial
-                    self.aquired = False
+                    self.acquired = False
 
                 finalTwist = self.fiducialTwist
 
@@ -169,7 +169,7 @@ class Sorter:
                 #return to starting position
 
 
-                if self.forward_error < 1 and self.aquired:
+                if self.forward_error < 1 and self.acquired:
                     self.servo_pub.publish(True) #open
                     self.state = "find_item"
 
@@ -194,7 +194,7 @@ class Sorter:
 
 
             #rotates to find fiducial if not present
-            if not self.aquired and self.state != "find_item":
+            if not self.acquired and self.state != "find_item":
                 finalTwist.angular.z = 0.6
                 finalTwist.linear.x = 0
 

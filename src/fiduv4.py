@@ -89,6 +89,13 @@ class Follow:
         self.state = "waiting"
         self.state_sub = rospy.Subscriber("/state", String, self.state_cb)
         self.timer = rospy.Timer(rospy.Duration(4), self.print_message)
+        self.trigger_pub = rospy.Publisher("/trigger", String, queue_size=1)
+        # self.trigger_sub = rospy.Subscriber("trigger", String, self.trigger_cb, queue_size=1)
+        self.trigger = ""
+        # this is used when getting the pub in other files. 
+
+    # def trigger_cb(self, msg):
+    #     self.trigger = msg.data
 
     def state_cb(self, msg):
         self.state = msg.data #bf: needed .data
@@ -191,8 +198,10 @@ class Follow:
         # print("running")
         # While our node is running
         while not rospy.is_shutdown():
+            # print("start loop fidu")
+            # self.state == "Goto_loading"
             if (self.state == "Goto_loading"):
-
+                # print("inside goto loop")
             
 
                 # Calculate the error in the x and y directions
@@ -278,6 +287,7 @@ class Follow:
                     # twist.angular.z = 0
                     twist.linear.x = linSpeed 
                     self.cmdPub.publish(twist)
+                    # print("published twist", twist)
                     if zeroSpeed:
                         self.suppressCmd = True
 
