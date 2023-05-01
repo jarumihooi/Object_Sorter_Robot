@@ -28,7 +28,7 @@ class Sorter:
         rospy.init_node('main')
         print("Starting main_control in object_Sorter project.")
         # basic params ====
-        self.rate = rospy.Rate(2)
+        self.rate = rospy.Rate(30)
 
         self.state = "find_item"
         self.target_color = "red"
@@ -70,7 +70,7 @@ class Sorter:
         # CORE pub subs ====
         self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
         self.servo_pub = rospy.Publisher('/servo', Bool, queue_size=1)#publishes commands to the claw
-        self.color_pub = rospy.publisher('/color', String, queue_size=1)#publishes the color the robot is looking for
+        self.color_pub = rospy.Publisher('/color', String, queue_size=1)#publishes the color the robot is looking for
 
 
         self.color_sub = rospy.Subscriber("/color_direction_twist", Twist, self.color_cb) #subscribes to the image recognition node
@@ -129,7 +129,7 @@ class Sorter:
         while not rospy.is_shutdown():
             self.print_state()
 
-            color_pub.publish(self.target_color)
+            self.color_pub.publish(self.target_color)
             finalTwist = Twist()
 
             if self.state == "find_item":
@@ -158,10 +158,14 @@ class Sorter:
                 
 
                 
-
-                if self.forward_error < 0.3 and self.acquired:
+                # delivered
+                if self.forward_error < 0.5 and self.acquired:
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
+                    if self.target_color == "green":
+                        self.target_color = "red"
+                    else: 
+                        self.target_color = "green"
                     self.state = "return_to_start"
                     self.target_fiducial = self.mixed_target_fiducial
                     self.acquired = False

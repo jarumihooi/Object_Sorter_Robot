@@ -5,7 +5,7 @@ from sensor_msgs.msg import CompressedImage, Image
 from geometry_msgs.msg import Twist
 import math
 import numpy as np
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, String
 
 from image_tools import ImageTools
 
@@ -28,7 +28,7 @@ class Follower:
         #TODO for testing only, remove after
         self.servo_pub = rospy.Publisher('/servo', Bool, queue_size=1)#publishes commands to the claw
 
-        self.color_pub = rospy.Subscriber('/color', String, set_color_cb)
+        self.color_pub = rospy.Subscriber('/color', String, self.set_color_cb)
         self.target_color = "green"
 
 
@@ -37,7 +37,8 @@ class Follower:
         self.lostcount = 0
 
     def set_color_cb(self, msg):
-        self.target_color = msg
+        self.target_color = msg.data
+        print(self.target_color)
 
     def image_callback(self, msg):
         # print('img_callback')
@@ -74,7 +75,7 @@ class Follower:
         upper_target = upper_green
 
 
-        if target_color == "red":
+        if self.target_color == "red":
             lower_target = lower_red
             upper_target = upper_red
 
