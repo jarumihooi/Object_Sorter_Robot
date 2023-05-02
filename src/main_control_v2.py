@@ -105,7 +105,7 @@ class Sorter:
             angular_error = math.atan2(self.fid_y, self.fid_x)
 
 
-            self.fiducialTwist.linear.x = self.forward_error * self.linear_rate
+            self.fiducialTwist.linear.x = (self.forward_error /2) * self.linear_rate
             self.fiducialTwist.angular.z = -angular_error * self.angular_rate - self.fiducialTwist.angular.z / 2.0 #- for some reason
 
 
@@ -160,7 +160,7 @@ class Sorter:
 
                 
                 # delivered
-                if self.forward_error < 0.5 and self.acquired:
+                if self.forward_error < 0.4 and self.acquired: #0.5
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
                     # this section switches color if remaining ====
@@ -212,8 +212,8 @@ class Sorter:
 
             #rotates to find fiducial if not present
             if not self.acquired and self.state != "find_item":
-                finalTwist.angular.z = 0.6
-                finalTwist.linear.x = 0
+                finalTwist.angular.z = 0.4
+                finalTwist.linear.x = -0.1
 
 
             self.cmd_pub.publish(finalTwist)
