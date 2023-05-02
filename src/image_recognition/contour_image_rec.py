@@ -123,12 +123,13 @@ class Follower:
 
         
         err = cx - w2/2
-       #self.twist.linear.x = 0.2
         ang_vel = ang_vel_control(-float(err) / 100)
+        print("err"+str(err))
 
-        # print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
+
+        print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
             
-        self.twist.angular.z = ang_vel
+        #self.twist.angular.z = ang_vel
         self.direction_pub.publish(self.twist) 
         #*************************
 
