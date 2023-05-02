@@ -65,7 +65,8 @@ class Sorter:
         self.fiducialTwist = Twist()
 
         # extended params ====
-        self.remaining = 3 # cans
+        self.red_left = 3 # cans
+        self.green_left = 3
 
         # CORE pub subs ====
         self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
@@ -162,10 +163,19 @@ class Sorter:
                 if self.forward_error < 0.5 and self.acquired:
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
+                    # this section switches color if remaining ====
                     if self.target_color == "green":
-                        self.target_color = "red"
+                        self.green_left -= 1
+                        if self.red_left > 0:
+                            self.target_color = "red"
                     else: 
-                        self.target_color = "green"
+                        self.red_left -= 1
+                        if self.green_left > 0:
+                            self.target_color = "green"
+                    if self.red_left <=0 and self.green_left <= 0:
+                        self.state = "shutdown"
+                        self.shutdown()
+                    # end switch-color section, includes shutdown() ====
                     self.state = "return_to_start"
                     self.target_fiducial = self.mixed_target_fiducial
                     self.acquired = False

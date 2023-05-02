@@ -34,7 +34,8 @@ class Sorter:
         self.AngSpd = 0.0
 
         # extended params ====
-        self.remaining = 3 # cans
+        self.red_left = 3 # cans
+        self.green_left = 3
 
         # CORE pub subs ====
         # self.cmd_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1) # A publisher for robot motion commands
