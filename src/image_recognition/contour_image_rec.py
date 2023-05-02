@@ -57,11 +57,8 @@ class Follower:
         # np_arr = np.fromstring(msg.data, np.uint8)
         # image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-        # filter out everything that's not yellow
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        lower_yellow = np.array([ 40, 0, 0]) 
-        upper_yellow = np.array([ 120, 255, 255])
-
+        
         #ideal color is 0, 100, 95 #prevously 160-180
         lower_red = np.array([170,80,80])
         upper_red = np.array([190,255,255])
