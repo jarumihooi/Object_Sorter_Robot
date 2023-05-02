@@ -1,7 +1,8 @@
 <launch>
-  <!-- This launch file: V4! INPROGRESS file to launch. 
+  <!-- This launch file: V5! WORKING file to launch. 
+    Known bugs: cv motion control and color switch need testing. 
 
-    TO LAUNCH: $ roslaunch object_sorter ip_v5.launch
+    TO LAUNCH: $ roslaunch object_sorter prod_v5.launch
     See below/readme if doesn't run. -->
 
   
