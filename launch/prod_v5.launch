@@ -62,6 +62,7 @@
   sudo apt-get install ros-noetic-fiducial-msgs
   sudo apt-get install xterm
   check if the image is as expected: for platform2, expecting: /raspicam_node/image/compressed
+  run the platform robot onboard. 
 
   
   -->
