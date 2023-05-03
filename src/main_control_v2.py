@@ -105,9 +105,9 @@ class Sorter:
             angular_error = math.atan2(self.fid_y, self.fid_x)
 
 
-            self.fiducialTwist.linear.x = (self.forward_error /2) * self.linear_rate
+            self.fiducialTwist.linear.x = (self.forward_error /1.2) * self.linear_rate #damping fidu #1.1 or 1.25
             self.fiducialTwist.angular.z = -angular_error * self.angular_rate - self.fiducialTwist.angular.z / 2.0 #- for some reason
-
+            
 
 
 
@@ -212,8 +212,8 @@ class Sorter:
 
             #rotates to find fiducial if not present
             if not self.acquired and self.state != "find_item":
-                finalTwist.angular.z = 0.4
-                finalTwist.linear.x = -0.1
+                finalTwist.angular.z = 0.4 # turning to find 
+                finalTwist.linear.x = -0.05 # reverse param
 
 
             self.cmd_pub.publish(finalTwist)

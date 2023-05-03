@@ -118,6 +118,10 @@ class Follower:
         #ideal value so far is 220
         if(w > 200):
             self.twist.linear.y = 1.0
+            print("closed")
+        elif w > 120 and (cx < 70 or cx > 330):
+            self.twist.linear.y = 1.0
+            print("closed")
         else:
             self.twist.linear.y = 0
 
@@ -126,10 +130,12 @@ class Follower:
         ang_vel = ang_vel_control(-float(err) / 100)
         print("err"+str(err))
 
+        print("cx:  " + str(cx))
+
 
         print("ang_vel= "+str(ang_vel)) #I turned this off for launch testing too. 
             
-        #self.twist.angular.z = ang_vel
+        self.twist.angular.z = ang_vel
         self.direction_pub.publish(self.twist) 
         #*************************
 
