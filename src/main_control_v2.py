@@ -56,7 +56,7 @@ class Sorter:
         self.angular_rate = 2.0
         self.linear_rate = 0.2
 
-        self.max_angular_rate = 1.2
+        self.max_angular_rate = 0.4 #1.2 #max turn. 
         self.max_linear_rate = 1.5
 
         self.min_dist = 0.3
@@ -105,7 +105,7 @@ class Sorter:
             angular_error = math.atan2(self.fid_y, self.fid_x)
 
 
-            self.fiducialTwist.linear.x = (self.forward_error /1.2) * self.linear_rate #damping fidu #1.1 or 1.25
+            self.fiducialTwist.linear.x = (self.forward_error /1.25) * self.linear_rate #damping fidu #1.1 or 1.25
             self.fiducialTwist.angular.z = -angular_error * self.angular_rate - self.fiducialTwist.angular.z / 2.0 #- for some reason
             
 
@@ -160,7 +160,7 @@ class Sorter:
 
                 
                 # delivered
-                if self.forward_error < 0.4 and self.acquired: #0.5
+                if self.forward_error < 0.5 and self.acquired: #0.5
                     self.servo_pub.publish(True) #open
                     self.fiducialTwist.linear.x = 0
                     # this section switches color if remaining ====
@@ -186,7 +186,7 @@ class Sorter:
                 #return to starting position
 
 
-                if self.forward_error < 1 and self.acquired:
+                if self.forward_error < 1.1 and self.acquired:
                     self.servo_pub.publish(True) #open
                     self.state = "find_item"
 

@@ -20,6 +20,7 @@ class Follower:
         self.bridge = cv_bridge.CvBridge()
         #self.image_sub = rospy.Subscriber('/camera/rgb/image_raw', Image, self.image_callback)
         self.image_sub = rospy.Subscriber('/raspicam_node/image/compressed', CompressedImage, self.image_callback, buff_size=2**24)
+        # add the buff size thing to aruco detect
         #self.image_sub = rospy.Subscriber('/raspicam_node/image', Image, self.image_callback)
 
         self.centroid_pub = rospy.Publisher('centroid', CompressedImage, queue_size=1)
